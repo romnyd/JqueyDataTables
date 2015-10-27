@@ -45,49 +45,8 @@
             @*<th></th>*@
         </tr>
     </thead>
-    @foreach (var item in Model)
-    {
-        <tbody>
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CompanyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContactName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContactTitle)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Region)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PostalCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Country)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fax)
-                </td>
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.CustomerID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.CustomerID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.CustomerID })
-                    </td>*@
-            </tr>
-        </tbody>
-    }
-
+    
+    <tbody></tbody>
 </table>
 
 @section scripts
@@ -96,14 +55,28 @@
     @Scripts.Render("~/bundles/datatables")
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#listar').DataTable({
-                "paging": true,
-                "recordsFiltered": 10,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
+            $('#listar').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": '@Url.Action("GetDataCustomers", "Home")',
+                "bProcessing": true,
+                "bdestroy": true,
+                "start": 0,
+                "order": [0, "asc"],
+                "bDeferRender": true,
+
+                "aoColumns": [
+                        { "sName": "CompanyName", "mData": "CompanyName" },
+                        { "sName": "ContactName", "mData": "ContactName" },
+                        { "sName": "ContactTitle", "mData": "ContactTitle" },
+                        { "sName": "Address", "mData": "Address" },
+                        { "sName": "City", "mData": "City" },
+                        { "sName": "Region", "mData": "Region" },
+                        { "sName": "PostalCode", "mData": "PostalCode" },
+                        { "sName": "Country", "mData": "Country" },
+                        { "sName": "Phone", "mData": "Phone" },
+                        { "sName": "Fax", "mData": "Fax" },
+                        
+                ],
             });
         });
     </script>
